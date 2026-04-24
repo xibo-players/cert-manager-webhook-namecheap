@@ -9,7 +9,7 @@ ifeq ($(IMAGE_TAG),)
 endif
 
 PLATFORMS := linux/amd64,linux/arm64
-REPO_NAME := ghcr.io/extrality
+REPO_NAME := ghcr.io/xibo-players
 OUT := $(shell pwd)/_out
 
 KUBE_VERSION=1.25.0
