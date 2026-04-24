@@ -34,4 +34,12 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
       - name: Build and push multi-arch image
-        run: make push
+        # Override the Makefile's `git describe`-based IMAGE_TAG with
+        # the tag that actually triggered this run. Earlier attempts
+        # relying on git describe (even with fetch-depth: 0) got
+        # "No annotated tags can describe <sha>" from CI checkouts,
+        # and the Makefile's guard silently fell back to IMAGE_TAG=latest
+        # — so `:v0.1.0` never landed in GHCR, only `:latest`.
+        # github.ref_name on a tag push is the tag's short name (e.g.
+        # `v0.1.0`), which is what we want.
+        run: make IMAGE_TAG=${{ github.ref_name }} push
